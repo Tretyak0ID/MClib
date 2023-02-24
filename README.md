@@ -1,2 +1,2 @@
 # MClib
-Matrix Computations library
+MClib (Matrix Computations library) - library for matrix computations in Fortran language
