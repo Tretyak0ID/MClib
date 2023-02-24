@@ -20,8 +20,22 @@ COTEXT  = "Compiling $(<F)"
 LITEXT  = "Assembling $@"
 
 #building rules
+$(DEXE)MATRIX_MOD_TEST: $(MKDIRS) $(DOBJ)matrix_mod_test.o
+	@rm -f $(filter-out $(DOBJ)matrix_mod_test.o,$(EXESOBJ))
+	@echo $(LITEXT)
+	@$(FC) $(OPTSL) $(DOBJ)*.o $(LIBS) -o $@
+EXES := $(EXES) MATRIX_MOD_TEST
 
 #compiling rules
+$(DOBJ)matrix_mod.o: src/matrix_mod.f90
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC)  $< -o $@
+
+$(DOBJ)matrix_mod_test.o: src/tests/matrix_mod_test.f90 \
+	$(DOBJ)matrix_mod.o
+	@echo $(COTEXT)
+	@$(FC) $(OPTSC)  $< -o $@
+
 #phony auxiliary rules
 .PHONY : $(MKDIRS)
 $(MKDIRS):
